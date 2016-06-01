@@ -2,9 +2,9 @@
 
 [Download v1.0](https://github.com/charliecm/alfred-hyperlink/raw/master/hyperlink.alfredworkflow)
 
-An Alfred workflow that lets you copy an open browser tab as hyperlink. This can be useful for pasting online sources into a document while doing research.
+An [Alfred](https://www.alfredapp.com/) workflow that lets you copy an open browser tab as hyperlink. This can be useful for pasting online sources into a document while doing research.
 
-Type `copylink` to select a tab to copy a linked text from. Currently supports Google Chrome and Safari only.
+Type `copylink` to see a list of open tabs. Currently, this workflow supports Google Chrome and Safari only.
 
 ![Demo](/assets/demo.gif?raw=true)
 

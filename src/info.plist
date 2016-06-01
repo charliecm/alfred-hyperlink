@@ -38,7 +38,7 @@
 	<key>createdby</key>
 	<string>Charlie Chao (@charliecm)</string>
 	<key>description</key>
-	<string>Copy a browser tab as hyperlink</string>
+	<string>Copy an open browser tab as hyperlink</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -88,7 +88,7 @@
 				<key>queuemode</key>
 				<integer>2</integer>
 				<key>runningsubtext</key>
-				<string>Getting browser tabs...</string>
+				<string>Getting your browser tabs...</string>
 				<key>script</key>
 				<string>ObjC.import('stdlib')
 
@@ -189,9 +189,9 @@ function run(argv) {
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>An Alfred workflow that lets you copy an open browser tab as hyperlink. This can be useful for pasting online sources into a document while doing research.
+	<string>A productivity workflow that lets you copy an open browser tab as hyperlink. This can be useful for pasting online sources into a document when doing research.
 
-Type `copylink` to select a tab to copy a linked text from. Currently supports Google Chrome and Safari only.</string>
+Type `copylink` to see a list of open tabs. Currently, this workflow supports Google Chrome and Safari only.</string>
 	<key>uidata</key>
 	<dict>
 		<key>5401675F-EFFB-434E-AA04-FB61D555B578</key>
