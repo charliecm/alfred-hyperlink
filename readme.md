@@ -1,6 +1,6 @@
 # Hyperlink
 
-[Download v1.0](https://github.com/charliecm/alfred-hyperlink/raw/master/hyperlink.alfredworkflow)
+[Download v1.0](https://github.com/charliecm/alfred-hyperlink/raw/master/Hyperlink.alfredworkflow)
 
 An [Alfred](https://www.alfredapp.com/) workflow that lets you copy an open browser tab as hyperlink. This can be useful for pasting online sources into a document when doing research.
 
