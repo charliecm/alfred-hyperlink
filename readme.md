@@ -10,6 +10,7 @@ Type `copylink` to see a list of open tabs. Currently, this workflow supports Go
 
 ## Release Notes
 
+**1.1** — Fixed hyperlink not being copied on select.
 **1.0** — Initial release.
 
 ## Credits
