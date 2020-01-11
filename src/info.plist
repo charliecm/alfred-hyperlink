@@ -21,11 +21,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>5401675F-EFFB-434E-AA04-FB61D555B578</key>
+		<key>547E5E8D-9A61-435F-AE57-26E8AF0E435C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>547E5E8D-9A61-435F-AE57-26E8AF0E435C</string>
+				<string>F5A3E151-52F1-482E-9E8A-4180C71A6B56</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -34,11 +34,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>547E5E8D-9A61-435F-AE57-26E8AF0E435C</key>
+		<key>736928C5-4C9C-414D-80DC-00952360E3A1</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>F5A3E151-52F1-482E-9E8A-4180C71A6B56</string>
+				<string>547E5E8D-9A61-435F-AE57-26E8AF0E435C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -80,6 +80,8 @@
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -99,65 +101,75 @@
 				<key>runningsubtext</key>
 				<string>Getting your browser tabs...</string>
 				<key>script</key>
-				<string>ObjC.import('stdlib')
+				<string>ObjC.import("stdlib");
 
-function isRunning(appName) {
-    var SE = Application('System Events');
-    try {
-        SE.processes.byName(appName)();
-    } catch(e) {
-        return false;
-    }
-    return true;
+const safariName = "Safari"
+const chromeName = "Google Chrome"
+
+function getApp(name) {
+	if (!Application(name).running()) {
+		return false;
+	}
+	return Application(name);
 }
 
-function populateItems(items, browser) {
-    var appName = (browser === 'chrome') ? 'Google Chrome' : 'Safari';
-    if (!isRunning(appName)) {
-        return;
-    }
-    var Browser = Application(appName);
-    var titleProp = (browser === 'chrome') ? 'title' : 'name';
-    var activeId = (browser === 'chrome') ? Browser.windows[0].activeTab.id() || false : false;
-    var i, j, tabs, tab, title, url, item;
-    for (i in Browser.windows) {
-        tabs = Browser.windows[i].tabs;
-        for (j in tabs) {
-            tab = tabs[j];
-            try {
-                title = tab[titleProp]();
-                url = tab.url();
-            } catch (e) {
-                continue;
-            }
-            item = {
-                title: title,
-                subtitle: url,
-                arg: url + ' ' + title,
-                icon: {
-                    path: browser + '.png'
-                },
-                text: {
-                    copy: url,
-                    largetype: url
-                }
-            };
-            if ((activeId !== false &amp;&amp; tab.id() === activeId) || (activeId === false &amp;&amp; tab.visible())) {
-                // Add active tab to the top
-                items.unshift(item);
-            } else {
-                items.push(item);
-            }
-        }
-    }
+function populateItems(items, Browser) {
+	const isSafari = Browser.name() === safariName
+	const isChrome = Browser.name() === chromeName
+	const icon = isSafari ? "safari" : "chrome"
+	const titleProp = isChrome ? "title" : "name";
+	const activeId = isChrome ? Browser.windows[0].activeTab.id() : false;
+	const activeURL = isSafari ? Browser.documents[0].url() : false;
+	let title, url, item;
+	for (const i in Browser.windows) {
+		const bwindow = Browser.windows[i]
+		const tabs = bwindow.tabs;
+		for (const j in tabs) {
+			tab = tabs[j];
+			try {
+				title = tab[titleProp]();
+				url = tab.url();
+			} catch (e) {
+				continue;
+			}
+			item = {
+				title: title,
+				subtitle: url,
+				arg: url + " " + title,
+				icon: {
+					path: icon + ".png"
+				},
+				text: {
+					copy: url,
+					largetype: url
+				}
+			};
+			if (
+				Browser.frontmost() &amp;&amp;
+				((activeId !== false &amp;&amp; tab.id() === activeId) ||
+				(activeURL !== false &amp;&amp; tab.url() === activeURL))) {
+				// Add active tab to the top
+				items.unshift(item);
+			} else {
+				items.push(item);
+			}
+		}
+	}
 }
 
 function run(argv) {
-    var result = { items: [] };
-    populateItems(result.items, 'safari');
-    populateItems(result.items, 'chrome');
-    return JSON.stringify(result);
-}</string>
+	let result = { items: [] };
+	const Safari = getApp(safariName);
+	const Chrome = getApp(chromeName);
+	let browsers = []
+	if (Safari) browsers.push(Safari)
+	if (Chrome) Chrome.frontmost() ? browsers.unshift(Chrome) : browsers.push(Chrome)
+	for (const i in browsers) {
+		populateItems(result.items, browsers[i]);
+	}
+	return JSON.stringify(result);
+}
+</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -174,9 +186,9 @@ function run(argv) {
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>5401675F-EFFB-434E-AA04-FB61D555B578</string>
+			<string>736928C5-4C9C-414D-80DC-00952360E3A1</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -229,6 +241,8 @@ function run(argv) {
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -248,65 +262,75 @@ function run(argv) {
 				<key>runningsubtext</key>
 				<string>Getting your browser tabs...</string>
 				<key>script</key>
-				<string>ObjC.import('stdlib')
+				<string>ObjC.import("stdlib");
 
-function isRunning(appName) {
-    var SE = Application('System Events');
-    try {
-        SE.processes.byName(appName)();
-    } catch(e) {
-        return false;
-    }
-    return true;
+const safariName = "Safari"
+const chromeName = "Google Chrome"
+
+function getApp(name) {
+	if (!Application(name).running()) {
+		return false;
+	}
+	return Application(name);
 }
 
-function populateItems(items, browser) {
-    var appName = (browser === 'chrome') ? 'Google Chrome' : 'Safari';
-    if (!isRunning(appName)) {
-        return;
-    }
-    var Browser = Application(appName);
-    var titleProp = (browser === 'chrome') ? 'title' : 'name';
-    var activeId = (browser === 'chrome') ? Browser.windows[0].activeTab.id() || false : false;
-    var i, j, tabs, tab, title, url, item;
-    for (i in Browser.windows) {
-        tabs = Browser.windows[i].tabs;
-        for (j in tabs) {
-            tab = tabs[j];
-            try {
-                title = tab[titleProp]();
-                url = tab.url();
-            } catch (e) {
-                continue;
-            }
-            item = {
-                title: title,
-                subtitle: url,
-                arg: url + ' ' + title,
-                icon: {
-                    path: browser + '.png'
-                },
-                text: {
-                    copy: url,
-                    largetype: url
-                }
-            };
-            if ((activeId !== false &amp;&amp; tab.id() === activeId) || (activeId === false &amp;&amp; tab.visible())) {
-                // Add active tab to the top
-                items.unshift(item);
-            } else {
-                items.push(item);
-            }
-        }
-    }
+function populateItems(items, Browser) {
+	const isSafari = Browser.name() === safariName
+	const isChrome = Browser.name() === chromeName
+	const icon = isSafari ? "safari" : "chrome"
+	const titleProp = isChrome ? "title" : "name";
+	const activeId = isChrome ? Browser.windows[0].activeTab.id() : false;
+	const activeURL = isSafari ? Browser.documents[0].url() : false;
+	let title, url, item;
+	for (const i in Browser.windows) {
+		const bwindow = Browser.windows[i]
+		const tabs = bwindow.tabs;
+		for (const j in tabs) {
+			tab = tabs[j];
+			try {
+				title = tab[titleProp]();
+				url = tab.url();
+			} catch (e) {
+				continue;
+			}
+			item = {
+				title: title,
+				subtitle: url,
+				arg: url + " " + title,
+				icon: {
+					path: icon + ".png"
+				},
+				text: {
+					copy: url,
+					largetype: url
+				}
+			};
+			if (
+				Browser.frontmost() &amp;&amp;
+				((activeId !== false &amp;&amp; tab.id() === activeId) ||
+				(activeURL !== false &amp;&amp; tab.url() === activeURL))) {
+				// Add active tab to the top
+				items.unshift(item);
+			} else {
+				items.push(item);
+			}
+		}
+	}
 }
 
 function run(argv) {
-    var result = { items: [] };
-    populateItems(result.items, 'safari');
-    populateItems(result.items, 'chrome');
-    return JSON.stringify(result);
-}</string>
+	let result = { items: [] };
+	const Safari = getApp(safariName);
+	const Chrome = getApp(chromeName);
+	let browsers = []
+	if (Safari) browsers.push(Safari)
+	if (Chrome) Chrome.frontmost() ? browsers.unshift(Chrome) : browsers.push(Chrome)
+	for (const i in browsers) {
+		populateItems(result.items, browsers[i]);
+	}
+	return JSON.stringify(result);
+}
+</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -325,7 +349,7 @@ function run(argv) {
 			<key>uid</key>
 			<string>D8A6AEF2-177F-4D94-A8F8-8490E4C97D74</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -381,48 +405,50 @@ Type `copylink` to see a list of open tabs. Currently, this workflow supports Go
 		<key>3A5FB045-4F55-42E2-B92E-89EF951EAD6A</key>
 		<dict>
 			<key>xpos</key>
-			<integer>310</integer>
+			<integer>425</integer>
 			<key>ypos</key>
-			<integer>190</integer>
+			<integer>230</integer>
 		</dict>
 		<key>3DC418E5-DBAB-4D95-BB1C-A671D889D42F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>585</integer>
 			<key>ypos</key>
-			<integer>190</integer>
-		</dict>
-		<key>5401675F-EFFB-434E-AA04-FB61D555B578</key>
-		<dict>
-			<key>xpos</key>
-			<integer>120</integer>
-			<key>ypos</key>
-			<integer>70</integer>
+			<integer>230</integer>
 		</dict>
 		<key>547E5E8D-9A61-435F-AE57-26E8AF0E435C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>310</integer>
+			<integer>425</integer>
 			<key>ypos</key>
-			<integer>70</integer>
+			<integer>115</integer>
+		</dict>
+		<key>736928C5-4C9C-414D-80DC-00952360E3A1</key>
+		<dict>
+			<key>xpos</key>
+			<integer>265</integer>
+			<key>ypos</key>
+			<integer>115</integer>
 		</dict>
 		<key>D8A6AEF2-177F-4D94-A8F8-8490E4C97D74</key>
 		<dict>
 			<key>xpos</key>
-			<integer>120</integer>
+			<integer>265</integer>
 			<key>ypos</key>
-			<integer>190</integer>
+			<integer>230</integer>
 		</dict>
 		<key>F5A3E151-52F1-482E-9E8A-4180C71A6B56</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>585</integer>
 			<key>ypos</key>
-			<integer>70</integer>
+			<integer>115</integer>
 		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>1.3</string>
+	<string>1.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/charliecm/alfred-hyperlink</string>
 </dict>
