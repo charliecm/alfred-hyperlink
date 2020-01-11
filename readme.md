@@ -10,8 +10,13 @@ Type `copylink` or `copylinkmd` to see a list of open tabs. Currently, this work
 
 ## Release Notes
 
-- **1.4** - Updated for Catalina. Fixed active tab not showing up first. Order of browser tabs now determined by which browser is in front.
-- **1.3** — Updated for High Sierra. Added ability to copy as a Markdown link.
+- **1.4**
+    - Updated for Catalina.
+    - Fixed active tab not showing up first.
+    - Order of browser tabs now determined by which browser is in front.
+- **1.3**
+    - Updated for High Sierra.
+    - Added ability to copy as a Markdown link.
 - **1.2** — Fixed copy script not working in Sierra.
 - **1.1** — Fixed hyperlink not being copied on select.
 - **1.0** — Initial release.
