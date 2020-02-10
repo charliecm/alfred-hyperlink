@@ -8,6 +8,19 @@
 	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
+		<key>0C6E4FAD-542D-4A95-B5E5-6839D7F427AA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>65646E25-EBE8-426D-9729-2F636642434B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>3A5FB045-4F55-42E2-B92E-89EF951EAD6A</key>
 		<array>
 			<dict>
@@ -26,6 +39,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>F5A3E151-52F1-482E-9E8A-4180C71A6B56</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>65646E25-EBE8-426D-9729-2F636642434B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2ADD4452-C710-437D-9A33-FAC8DA8CCED8</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -66,13 +92,57 @@
 	<key>createdby</key>
 	<string>Charlie Chao (@charliecm)</string>
 	<key>description</key>
-	<string>Copy an open browser tab as an HTML hyperlink or Markdown link.</string>
+	<string>Copy an open browser tab as an HTML hyperlink, Markdown or Textile link.</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
 	<string>Hyperlink</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./CopyHTML "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>547E5E8D-9A61-435F-AE57-26E8AF0E435C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Hyperlink Copied</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>F5A3E151-52F1-482E-9E8A-4180C71A6B56</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -198,7 +268,7 @@ function run(argv) {
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./CopyHTML "{query}"</string>
+				<string>./CopyMD "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -209,30 +279,9 @@ function run(argv) {
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>547E5E8D-9A61-435F-AE57-26E8AF0E435C</string>
+			<string>3A5FB045-4F55-42E2-B92E-89EF951EAD6A</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Hyperlink Copied</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>F5A3E151-52F1-482E-9E8A-4180C71A6B56</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -375,12 +424,150 @@ function run(argv) {
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>copylinktxt</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Getting your browser tabs...</string>
+				<key>script</key>
+				<string>ObjC.import("stdlib");
+
+const safariName = "Safari"
+const chromeName = "Google Chrome"
+
+function getApp(name) {
+	if (!Application(name).running()) {
+		return false;
+	}
+	return Application(name);
+}
+
+function populateItems(items, Browser) {
+	const isSafari = Browser.name() === safariName
+	const isChrome = Browser.name() === chromeName
+	const icon = isSafari ? "safari" : "chrome"
+	const titleProp = isChrome ? "title" : "name";
+	const activeId = isChrome ? Browser.windows[0].activeTab.id() : false;
+	const activeURL = isSafari ? Browser.documents[0].url() : false;
+	let title, url, item;
+	for (const i in Browser.windows) {
+		const bwindow = Browser.windows[i]
+		const tabs = bwindow.tabs;
+		for (const j in tabs) {
+			tab = tabs[j];
+			try {
+				title = tab[titleProp]();
+				url = tab.url();
+			} catch (e) {
+				continue;
+			}
+			item = {
+				title: title,
+				subtitle: url,
+				arg: url + " " + title,
+				icon: {
+					path: icon + ".png"
+				},
+				text: {
+					copy: url,
+					largetype: url
+				}
+			};
+			if (
+				Browser.frontmost() &amp;&amp;
+				((activeId !== false &amp;&amp; tab.id() === activeId) ||
+				(activeURL !== false &amp;&amp; tab.url() === activeURL))) {
+				// Add active tab to the top
+				items.unshift(item);
+			} else {
+				items.push(item);
+			}
+		}
+	}
+}
+
+function run(argv) {
+	let result = { items: [] };
+	const Safari = getApp(safariName);
+	const Chrome = getApp(chromeName);
+	let browsers = []
+	if (Safari) browsers.push(Safari)
+	if (Chrome) Chrome.frontmost() ? browsers.unshift(Chrome) : browsers.push(Chrome)
+	for (const i in browsers) {
+		populateItems(result.items, browsers[i]);
+	}
+	return JSON.stringify(result);
+}
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Copy Tab as Textile Link</string>
+				<key>type</key>
+				<integer>7</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>0C6E4FAD-542D-4A95-B5E5-6839D7F427AA</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Textile Link Copied</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>2ADD4452-C710-437D-9A33-FAC8DA8CCED8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./CopyMD "{query}"</string>
+				<string>./CopyTextile "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -391,7 +578,7 @@ function run(argv) {
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>3A5FB045-4F55-42E2-B92E-89EF951EAD6A</string>
+			<string>65646E25-EBE8-426D-9729-2F636642434B</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -402,6 +589,20 @@ function run(argv) {
 Type `copylink` to see a list of open tabs. Currently, this workflow supports Google Chrome and Safari only.</string>
 	<key>uidata</key>
 	<dict>
+		<key>0C6E4FAD-542D-4A95-B5E5-6839D7F427AA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>265</integer>
+			<key>ypos</key>
+			<integer>345</integer>
+		</dict>
+		<key>2ADD4452-C710-437D-9A33-FAC8DA8CCED8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>585</integer>
+			<key>ypos</key>
+			<integer>345</integer>
+		</dict>
 		<key>3A5FB045-4F55-42E2-B92E-89EF951EAD6A</key>
 		<dict>
 			<key>xpos</key>
@@ -422,6 +623,13 @@ Type `copylink` to see a list of open tabs. Currently, this workflow supports Go
 			<integer>425</integer>
 			<key>ypos</key>
 			<integer>115</integer>
+		</dict>
+		<key>65646E25-EBE8-426D-9729-2F636642434B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>425</integer>
+			<key>ypos</key>
+			<integer>345</integer>
 		</dict>
 		<key>736928C5-4C9C-414D-80DC-00952360E3A1</key>
 		<dict>
@@ -448,7 +656,7 @@ Type `copylink` to see a list of open tabs. Currently, this workflow supports Go
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.4</string>
+	<string>1.5</string>
 	<key>webaddress</key>
 	<string>https://github.com/charliecm/alfred-hyperlink</string>
 </dict>

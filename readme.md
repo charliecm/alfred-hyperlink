@@ -1,6 +1,6 @@
 # Hyperlink
 
-[Download v1.4](https://github.com/charliecm/alfred-hyperlink/raw/master/Hyperlink.alfredworkflow)
+[Download v1.5](https://github.com/charliecm/alfred-hyperlink/raw/master/Hyperlink.alfredworkflow)
 
 An [Alfred](https://www.alfredapp.com/) workflow that lets you copy an open browser tab as an HTML hyperlink or Markdown link. This can be useful for pasting online sources into a document when doing research.
 
@@ -10,6 +10,7 @@ Type `copylink` or `copylinkmd` to see a list of open tabs. Currently, this work
 
 ## Release Notes
 
+- **1.5** — Added Textile support.
 - **1.4**
     - Updated for Catalina.
     - Fixed active tab not showing up first.
